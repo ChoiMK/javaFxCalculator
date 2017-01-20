@@ -1,6 +1,7 @@
 package application;
 
 import java.net.URL;
+import java.sql.Savepoint;
 import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
@@ -34,6 +35,7 @@ public class MainController implements Initializable{
 	private double saveNumber;
 	private String saveOperator;
 	
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		
@@ -42,66 +44,65 @@ public class MainController implements Initializable{
 	@FXML
 	public void onclickButton(ActionEvent event){
 
-	String btnText=((Button)event.getTarget()).getText();
-	
-	switch(btnText){
-	case "0" :
-	case "1" :
-	case "2" :
-	case "3" :
-	case "4" :
-	case "5" :
-	case "6" :
-	case "7" :
-	case "8" :
-	case "9" :
-	case "." :
-		addNumber(btnText);
-		break;
-	case "/" :
-	case "*" :
-	case "-" :
-	case "+" :
-	case "=" :
-		calculate(btnText);
-		break;
-	case "c" :
-		isInitialize = true;
-		saveNumber=0;
-		saveOperator=null;
-		textField_calculator.setText("");
-	}
+		String btnText = ((Button)event.getTarget()).getText();
 		
-			         
-	   }
-	   
-	
-	public void addNumber(String strNum){
-		if(isInitialize){
-			textField_calculator.setText(strNum);
-		}else{
-			textField_calculator.setText(textField_calculator.getText()+strNum);
+		switch(btnText){
+		case "0" :
+		case "1" :
+		case "2" :
+		case "3" :
+		case "4" :
+		case "5" :
+		case "6" :
+		case "7" :
+		case "8" :
+		case "9" :
+		case "." :
+				addNumber(btnText);
+				break;
+		case "/" :
+		case "*" :
+		case "+" :
+		case "-" :
+		case "=" :
+				calculate(btnText);
+				break;
+		case "c" :
+			 isInitialize = true;
+			 saveNumber=0;
+			 saveOperator=null;
+			 textField_calculator.setText("");
+		
 		}
-		isInitialize = false;	
+		
+}
+	
+	public void addNumber(String btnText){
+		if(isInitialize){
+			textField_calculator.setText(btnText);
+		}else{
+			textField_calculator.setText(textField_calculator.getText()+btnText);
+		}
+		isInitialize = false;
+		
 	}
 	
 	public void calculate(String opt){
 		if(saveOperator!=null){
 		
 		switch(saveOperator){
-		case "/" :
-			saveNumber=saveNumber/Double.parseDouble(textField_calculator.getText());
+		case  "/":
+			saveNumber=saveNumber / Double.parseDouble(textField_calculator.getText());
 			break;
-		case "*" :
-			saveNumber=saveNumber*Double.parseDouble(textField_calculator.getText());
+		case  "*":
+			saveNumber=saveNumber * Double.parseDouble(textField_calculator.getText());
 			break;
-		case "-" :
-			saveNumber=saveNumber-Double.parseDouble(textField_calculator.getText());
+		case  "+":
+			saveNumber=saveNumber + Double.parseDouble(textField_calculator.getText());
 			break;
-		case "+" :
-			saveNumber=saveNumber+Double.parseDouble(textField_calculator.getText());
+		case  "-":
+			saveNumber=saveNumber - Double.parseDouble(textField_calculator.getText());
 			break;
-		case "c" :
 		}
 		
 		long a = (long)saveNumber;
@@ -110,28 +111,13 @@ public class MainController implements Initializable{
 		}else{
 			textField_calculator.setText(a+"");
 		}
+		
 	}
 		
+		saveNumber=Double.parseDouble(textField_calculator.getText());	
+		saveOperator = opt;
+		isInitialize = true;
 		
-		saveNumber=Double.parseDouble(textField_calculator.getText());
-		saveOperator=opt;
-		isInitialize=true;
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+		
 }
